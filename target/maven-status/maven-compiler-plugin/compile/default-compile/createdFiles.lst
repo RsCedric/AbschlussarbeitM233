@@ -1,0 +1,6 @@
+com\example\multiuserapp\security\WebSecurityConfig.class
+com\example\multiuserapp\controller\UserController.class
+com\example\multiuserapp\repository\UserRepository.class
+com\example\multiuserapp\MultiuserappApplication.class
+com\example\multiuserapp\model\User.class
+com\example\multiuserapp\service\UserService.class
