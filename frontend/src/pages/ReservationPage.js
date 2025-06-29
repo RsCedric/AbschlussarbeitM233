@@ -16,38 +16,20 @@ const ReservationPage = () => {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [participants, setParticipants] = useState(1);
-  const [participantData, setParticipantData] = useState([
-    { name: "", address: "", email: "" },
-  ]);
+  const [booker, setBooker] = useState({ name: "", address: "", email: "" });
   const [remark, setRemark] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const maxCapacity = ROOMS.find((r) => r.number === Number(room)).capacity;
 
-  const handleParticipantsChange = (e) => {
-    const value = Math.max(1, Math.min(maxCapacity, Number(e.target.value)));
-    setParticipants(value);
-    setParticipantData((prev) => {
-      const arr = [...prev];
-      while (arr.length < value) arr.push({ name: "", address: "", email: "" });
-      while (arr.length > value) arr.pop();
-      return arr;
-    });
-  };
-
-  const handleParticipantField = (idx, field, value) => {
-    setParticipantData((prev) => {
-      const arr = [...prev];
-      arr[idx][field] = value;
-      return arr;
-    });
+  const handleBookerField = (field, value) => {
+    setBooker((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
-    // Validierung
     if (!date || !from || !to) {
       setError("Bitte Datum und Uhrzeiten angeben.");
       return;
@@ -56,11 +38,9 @@ const ReservationPage = () => {
       setError("Bemerkung muss zwischen 10 und 200 Zeichen lang sein.");
       return;
     }
-    for (let p of participantData) {
-      if (!p.name || !p.address || !p.email) {
-        setError("Alle Teilnehmerdaten müssen ausgefüllt sein.");
-        return;
-      }
+    if (!booker.name || !booker.address || !booker.email) {
+      setError("Bitte Name, Adresse und E-Mail des Buchenden angeben.");
+      return;
     }
     try {
       await api.post("/reservations", {
@@ -69,7 +49,8 @@ const ReservationPage = () => {
         from,
         to,
         remark,
-        participants: participantData,
+        participants,
+        booker,
       });
       setSuccess("Reservierung erfolgreich!");
     } catch (err) {
@@ -132,41 +113,39 @@ const ReservationPage = () => {
           label={`Anzahl Teilnehmer (max. ${maxCapacity})`}
           type="number"
           value={participants}
-          onChange={handleParticipantsChange}
+          onChange={e => setParticipants(Math.max(1, Math.min(maxCapacity, Number(e.target.value))))}
           fullWidth
           margin="normal"
           inputProps={{ min: 1, max: maxCapacity }}
         />
-        {participantData.map((p, idx) => (
-          <Box key={idx} sx={{ border: "1px solid #eee", borderRadius: 1, p: 2, mb: 2 }}>
-            <Typography variant="subtitle1">Teilnehmer {idx + 1}</Typography>
-            <TextField
-              label="Name"
-              value={p.name}
-              onChange={e => handleParticipantField(idx, "name", e.target.value)}
-              fullWidth
-              margin="dense"
-              required
-            />
-            <TextField
-              label="Adresse"
-              value={p.address}
-              onChange={e => handleParticipantField(idx, "address", e.target.value)}
-              fullWidth
-              margin="dense"
-              required
-            />
-            <TextField
-              label="E-Mail"
-              type="email"
-              value={p.email}
-              onChange={e => handleParticipantField(idx, "email", e.target.value)}
-              fullWidth
-              margin="dense"
-              required
-            />
-          </Box>
-        ))}
+        <Box sx={{ border: "1px solid #eee", borderRadius: 1, p: 2, mb: 2 }}>
+          <Typography variant="subtitle1">Buchende Person</Typography>
+          <TextField
+            label="Name"
+            value={booker.name}
+            onChange={e => handleBookerField("name", e.target.value)}
+            fullWidth
+            margin="dense"
+            required
+          />
+          <TextField
+            label="Adresse"
+            value={booker.address}
+            onChange={e => handleBookerField("address", e.target.value)}
+            fullWidth
+            margin="dense"
+            required
+          />
+          <TextField
+            label="E-Mail"
+            type="email"
+            value={booker.email}
+            onChange={e => handleBookerField("email", e.target.value)}
+            fullWidth
+            margin="dense"
+            required
+          />
+        </Box>
         <TextField
           label="Bemerkung"
           value={remark}
