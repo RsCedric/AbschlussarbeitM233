@@ -21,12 +21,14 @@ const Navbar = () => {
         {admin ? (
           <>
             <Button color="inherit" component={Link} to="/admin/dashboard">Dashboard</Button>
+            <Button color="inherit" component={Link} to="/rooms">Räume Übersicht</Button>
             <Button color="inherit" onClick={handleLogout}>Logout</Button>
           </>
         ) : user ? (
           <>
             <Button color="inherit" component={Link} to="/">Home</Button>
             <Button color="inherit" component={Link} to="/reservation">Reservation</Button>
+            <Button color="inherit" component={Link} to="/rooms">Räume Übersicht</Button>
             <Button color="inherit" onClick={handleLogout}>Logout</Button>
           </>
         ) : (
@@ -34,6 +36,7 @@ const Navbar = () => {
             <Button color="inherit" component={Link} to="/login">Login</Button>
             <Button color="inherit" component={Link} to="/register">Registrieren</Button>
             <Button color="inherit" component={Link} to="/admin">Admin</Button>
+            <Button color="inherit" component={Link} to="/rooms">Räume Übersicht</Button>
           </>
         )}
       </Toolbar>
