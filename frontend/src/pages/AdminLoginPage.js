@@ -1,28 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
-function AdminLoginPage({ onLogin }) {
+const AdminLoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
-    try {
-      const response = await fetch('/api/admin/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-      });
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem('adminToken', data.token);
-        if (onLogin) onLogin();
-      } else {
-        setError('Login fehlgeschlagen!');
-      }
-    } catch (err) {
-      setError('Serverfehler!');
+    if (username === 'admin' && password === 'Admin123') {
+      login({ username: 'admin' }, true);
+      navigate('/admin/dashboard');
+    } else {
+      setError('Falscher Admin-Login!');
     }
   };
 
@@ -43,6 +37,6 @@ function AdminLoginPage({ onLogin }) {
       </form>
     </div>
   );
-}
+};
 
 export default AdminLoginPage; 
