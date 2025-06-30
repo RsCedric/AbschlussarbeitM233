@@ -15,10 +15,7 @@ const AdminLoginPage = () => {
     setError('');
     try {
       const response = await api.post('/admin/login', { username, password });
-      // Bei Erfolg: Admin-Login setzen und weiterleiten
       login({ username }, true);
-      // Optional: Token speichern, wenn du später JWT nutzt
-      // localStorage.setItem('adminToken', response.data.token);
       navigate('/admin/dashboard');
     } catch (err) {
       setError('Falscher Admin-Login!');
@@ -26,20 +23,83 @@ const AdminLoginPage = () => {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: '50px auto', padding: 20, border: '1px solid #ccc', borderRadius: 8 }}>
-      <h2>Admin Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: 10 }}>
-          <label>Username:</label><br />
-          <input type="text" value={username} onChange={e => setUsername(e.target.value)} required style={{ width: '100%' }} />
-        </div>
-        <div style={{ marginBottom: 10 }}>
-          <label>Passwort:</label><br />
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)} required style={{ width: '100%' }} />
-        </div>
-        {error && <div style={{ color: 'red', marginBottom: 10 }}>{error}</div>}
-        <button type="submit" style={{ width: '100%' }}>Login</button>
-      </form>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #121212 60%, #ff00cc 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ background: '#1e1e1e', borderRadius: 18, boxShadow: '0 0 32px #ff00cc55', padding: 40, width: 370, maxWidth: '90vw', border: '1.5px solid #ff00cc' }}>
+        <h2 style={{ color: '#ff00cc', textAlign: 'center', marginBottom: 32, letterSpacing: 1 }}>Admin Login</h2>
+        <form onSubmit={handleSubmit}>
+          <div style={{ marginBottom: 22 }}>
+            <label style={{ color: '#fff', fontWeight: 500 }}>Username:</label><br />
+            <input
+              type="text"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              required
+              style={{
+                width: '100%',
+                padding: '12px 14px',
+                borderRadius: 8,
+                border: '1.5px solid #ff00cc',
+                background: '#121212',
+                color: '#fff',
+                fontSize: 16,
+                outline: 'none',
+                marginTop: 6,
+                marginBottom: 2,
+                transition: 'border 0.2s',
+              }}
+              onFocus={e => e.target.style.border = '2px solid #ff00cc'}
+              onBlur={e => e.target.style.border = '1.5px solid #ff00cc'}
+            />
+          </div>
+          <div style={{ marginBottom: 22 }}>
+            <label style={{ color: '#fff', fontWeight: 500 }}>Passwort:</label><br />
+            <input
+              type="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+              style={{
+                width: '100%',
+                padding: '12px 14px',
+                borderRadius: 8,
+                border: '1.5px solid #ff00cc',
+                background: '#121212',
+                color: '#fff',
+                fontSize: 16,
+                outline: 'none',
+                marginTop: 6,
+                marginBottom: 2,
+                transition: 'border 0.2s',
+              }}
+              onFocus={e => e.target.style.border = '2px solid #ff00cc'}
+              onBlur={e => e.target.style.border = '1.5px solid #ff00cc'}
+            />
+          </div>
+          {error && <div style={{ color: '#ff3366', marginBottom: 18, textAlign: 'center', fontWeight: 500 }}>{error}</div>}
+          <button
+            type="submit"
+            style={{
+              width: '100%',
+              padding: '14px 0',
+              background: 'linear-gradient(90deg, #ff00cc 60%, #b2008f 100%)',
+              color: '#fff',
+              border: 'none',
+              borderRadius: 8,
+              fontSize: 18,
+              fontWeight: 600,
+              letterSpacing: 1,
+              boxShadow: '0 2px 12px #ff00cc44',
+              cursor: 'pointer',
+              marginTop: 10,
+              transition: 'background 0.2s',
+            }}
+            onMouseOver={e => e.target.style.background = 'linear-gradient(90deg, #b2008f 60%, #ff00cc 100%)'}
+            onMouseOut={e => e.target.style.background = 'linear-gradient(90deg, #ff00cc 60%, #b2008f 100%)'}
+          >
+            Login
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

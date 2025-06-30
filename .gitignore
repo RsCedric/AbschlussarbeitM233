@@ -1,0 +1,23 @@
+# Maven / Java
+/target/
+
+# Node.js / React
+/frontend/node_modules/
+/frontend/.cache/
+/frontend/build/
+
+# IDEs
+/.idea/
+/.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Sonstige Caches
+/.gradle/
+/.npm/
+/.yarn/ 
