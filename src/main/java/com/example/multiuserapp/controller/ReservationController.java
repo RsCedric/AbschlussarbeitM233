@@ -62,4 +62,28 @@ public class ReservationController {
     public List<Reservation> getReservations(@RequestParam int room, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return reservationService.getReservationsForRoomAndDate(room, date);
     }
+
+    @GetMapping("/my-reservations")
+    public ResponseEntity<?> getMyReservations(@RequestParam String userEmail) {
+        try {
+            List<Reservation> reservations = reservationService.getReservationsByUser(userEmail);
+            return ResponseEntity.ok(reservations);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteReservation(@PathVariable Long id, @RequestParam String userEmail) {
+        try {
+            boolean deleted = reservationService.deleteReservation(id, userEmail);
+            if (deleted) {
+                return ResponseEntity.ok(Map.of("message", "Reservierung erfolgreich gelöscht!"));
+            } else {
+                return ResponseEntity.badRequest().body(Map.of("error", "Reservierung nicht gefunden oder Sie haben keine Berechtigung zum Löschen!"));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
 } 

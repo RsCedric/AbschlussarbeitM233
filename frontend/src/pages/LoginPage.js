@@ -15,8 +15,12 @@ const LoginPage = () => {
     setError('');
     try {
       const response = await api.post('/users/login', { username, password });
-      // Annahme: response.data enthält user und ggf. token
-      login({ username });
+      // Speichere User-Daten inklusive E-Mail
+      login({ 
+        username: response.data.username, 
+        email: response.data.email,
+        id: response.data.id 
+      });
       if (response.data.token) {
         localStorage.setItem('token', response.data.token);
       }

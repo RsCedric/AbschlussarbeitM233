@@ -5,6 +5,7 @@ import { AuthContext } from '../context/AuthContext';
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -16,7 +17,7 @@ const RegisterPage = () => {
     setError('');
     setSuccess('');
     try {
-      await api.post('/users/register', { username, password });
+      await api.post('/users/register', { username, email, password });
       setSuccess('Registrierung erfolgreich! Du wirst weitergeleitet ...');
       setTimeout(() => navigate('/login'), 1500);
     } catch (err) {
@@ -35,6 +36,13 @@ const RegisterPage = () => {
           placeholder="Username"
           value={username}
           onChange={e => setUsername(e.target.value)}
+          required
+        />
+        <input
+          type="email"
+          placeholder="E-Mail"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
           required
         />
         <input

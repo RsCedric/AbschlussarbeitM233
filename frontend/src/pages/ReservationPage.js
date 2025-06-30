@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Box, Button, TextField, MenuItem, Typography, Grid } from "@mui/material";
 import api from "../api/axios";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 const ROOMS = [
   { number: 101, capacity: 4 },
@@ -22,6 +24,8 @@ const ReservationPage = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const maxCapacity = ROOMS.find((r) => r.number === Number(room)).capacity;
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
 
   const handleBookerField = (field, value) => {
     setBooker((prev) => ({ ...prev, [field]: value }));
@@ -59,6 +63,10 @@ const ReservationPage = () => {
         booker,
       });
       setSuccess("Reservierung erfolgreich!");
+      setTimeout(() => {
+        navigate("/rooms?tab=my");
+        window.location.reload();
+      }, 1000);
     } catch (err) {
       setError(err.response?.data?.error || "Reservierung fehlgeschlagen");
     }
