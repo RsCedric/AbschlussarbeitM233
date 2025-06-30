@@ -1,11 +1,80 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api/axios';
 
+const EditModal = ({ open, onClose, reservation, onSave }) => {
+  const [form, setForm] = useState(reservation || {});
+
+  useEffect(() => {
+    setForm(reservation || {});
+  }, [reservation]);
+
+  if (!open) return null;
+
+  const handleChange = e => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    onSave(form);
+  };
+
+  return (
+    <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: '#000a', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
+      <form onSubmit={handleSubmit} style={{ background: '#1e1e1e', padding: 32, borderRadius: 12, minWidth: 350, boxShadow: '0 0 24px #ff00cc55', color: '#fff' }}>
+        <h3 style={{ color: '#ff00cc', marginBottom: 20 }}>Reservation bearbeiten</h3>
+        <div style={{ marginBottom: 12 }}>
+          <label>Raum:</label><br />
+          <input name="room" value={form.room || ''} onChange={handleChange} style={{ width: '100%', padding: 8, borderRadius: 6, border: '1px solid #ff00cc', background: '#121212', color: '#fff' }} />
+        </div>
+        <div style={{ marginBottom: 12 }}>
+          <label>Von (Datum):</label><br />
+          <input name="dateFrom" type="date" value={form.dateFrom || ''} onChange={handleChange} style={{ width: '100%', padding: 8, borderRadius: 6, border: '1px solid #ff00cc', background: '#121212', color: '#fff' }} />
+        </div>
+        <div style={{ marginBottom: 12 }}>
+          <label>Bis (Datum):</label><br />
+          <input name="dateTo" type="date" value={form.dateTo || ''} onChange={handleChange} style={{ width: '100%', padding: 8, borderRadius: 6, border: '1px solid #ff00cc', background: '#121212', color: '#fff' }} />
+        </div>
+        <div style={{ marginBottom: 12 }}>
+          <label>Zeit von:</label><br />
+          <input name="fromTime" type="time" value={form.fromTime || ''} onChange={handleChange} style={{ width: '100%', padding: 8, borderRadius: 6, border: '1px solid #ff00cc', background: '#121212', color: '#fff' }} />
+        </div>
+        <div style={{ marginBottom: 12 }}>
+          <label>Zeit bis:</label><br />
+          <input name="toTime" type="time" value={form.toTime || ''} onChange={handleChange} style={{ width: '100%', padding: 8, borderRadius: 6, border: '1px solid #ff00cc', background: '#121212', color: '#fff' }} />
+        </div>
+        <div style={{ marginBottom: 12 }}>
+          <label>Teilnehmer:</label><br />
+          <input name="participants" type="number" value={form.participants || ''} onChange={handleChange} style={{ width: '100%', padding: 8, borderRadius: 6, border: '1px solid #ff00cc', background: '#121212', color: '#fff' }} />
+        </div>
+        <div style={{ marginBottom: 12 }}>
+          <label>Name:</label><br />
+          <input name="bookerName" value={form.bookerName || ''} onChange={handleChange} style={{ width: '100%', padding: 8, borderRadius: 6, border: '1px solid #ff00cc', background: '#121212', color: '#fff' }} />
+        </div>
+        <div style={{ marginBottom: 12 }}>
+          <label>E-Mail:</label><br />
+          <input name="bookerEmail" value={form.bookerEmail || ''} onChange={handleChange} style={{ width: '100%', padding: 8, borderRadius: 6, border: '1px solid #ff00cc', background: '#121212', color: '#fff' }} />
+        </div>
+        <div style={{ marginBottom: 12 }}>
+          <label>Bemerkung:</label><br />
+          <input name="remark" value={form.remark || ''} onChange={handleChange} style={{ width: '100%', padding: 8, borderRadius: 6, border: '1px solid #ff00cc', background: '#121212', color: '#fff' }} />
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 12 }}>
+          <button type="button" onClick={onClose} style={{ background: '#121212', color: '#ff00cc', border: '1px solid #ff00cc', borderRadius: 6, padding: '8px 16px', cursor: 'pointer' }}>Abbrechen</button>
+          <button type="submit" style={{ background: '#ff00cc', color: '#fff', border: 'none', borderRadius: 6, padding: '8px 16px', cursor: 'pointer' }}>Speichern</button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
 const AdminDashboard = () => {
   const [reservations, setReservations] = useState([]);
   const [filter, setFilter] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [editOpen, setEditOpen] = useState(false);
+  const [editReservation, setEditReservation] = useState(null);
 
   useEffect(() => {
     api.get('/reservations/all')
@@ -21,7 +90,6 @@ const AdminDashboard = () => {
 
   const handleDelete = (id) => {
     if (window.confirm('Wirklich löschen?')) {
-      // Optional: setLoading(true);
       api.delete(`/reservations/${id}`)
         .then(() => setReservations(reservations.filter(r => r.id !== id)))
         .catch(() => setError('Fehler beim Löschen'));
@@ -29,7 +97,19 @@ const AdminDashboard = () => {
   };
 
   const handleEdit = (id) => {
-    alert('Bearbeiten-Funktion kommt noch!');
+    const res = reservations.find(r => r.id === id);
+    setEditReservation(res);
+    setEditOpen(true);
+  };
+
+  const handleSaveEdit = (updated) => {
+    api.patch(`/reservations/${updated.id}`, updated)
+      .then(res => {
+        setReservations(reservations.map(r => r.id === updated.id ? res.data : r));
+        setEditOpen(false);
+        setEditReservation(null);
+      })
+      .catch(() => setError('Fehler beim Speichern'));
   };
 
   const filteredReservations = reservations.filter(r =>
@@ -96,6 +176,7 @@ const AdminDashboard = () => {
           </table>
         </div>
       )}
+      <EditModal open={editOpen} onClose={() => setEditOpen(false)} reservation={editReservation} onSave={handleSaveEdit} />
     </div>
   );
 };
