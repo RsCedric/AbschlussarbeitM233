@@ -48,32 +48,58 @@ const MeineBuchungenPage = () => {
   if (error) return <Typography color="error">{error}</Typography>;
 
   return (
-    <Box sx={{ maxWidth: 700, mx: "auto", mt: 4 }}>
-      <Typography variant="h5" gutterBottom>Meine Buchungen</Typography>
+    <Box sx={{ maxWidth: 800, mx: "auto", mt: 4, p: 3 }}>
+      <Typography variant="h4" fontWeight={600} gutterBottom sx={{ color: 'primary.main', textShadow: 'none' }}>
+        Meine Buchungen
+      </Typography>
       {reservations.length === 0 ? (
-        <Typography>Keine Buchungen vorhanden.</Typography>
+        <Typography color="text.secondary">Keine Buchungen vorhanden.</Typography>
       ) : (
         <List>
           {reservations.map(res => (
-            <ListItem key={res.id} sx={{ border: "1px solid #ccc", borderRadius: 2, mb: 2 }}
+            <ListItem
+              key={res.id}
+              sx={{
+                mb: 3,
+                p: 3,
+                borderRadius: 4,
+                boxShadow: '0 2px 12px 0 #00000033',
+                background: 'linear-gradient(90deg, #232323 60%, #181818 100%)',
+                border: '1.5px solid',
+                borderColor: 'primary.main',
+                position: 'relative',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                transition: 'box-shadow 0.3s',
+              }}
               secondaryAction={
-                <>
-                  <IconButton color="primary" onClick={() => navigate(`/edit-reservation/${res.id}`, { state: { reservation: res } })}>
+                <Box>
+                  <IconButton color="primary" title="Buchung bearbeiten" onClick={() => navigate(`/edit-reservation/${res.id}`, { state: { reservation: res } })}>
                     <EditIcon />
                   </IconButton>
-                  <IconButton color="error" onClick={() => handleDelete(res.id)}>
+                  <IconButton color="error" title="Buchung löschen" onClick={() => handleDelete(res.id)}>
                     <DeleteIcon />
                   </IconButton>
-                </>
+                </Box>
               }
             >
-              <ListItemText
-                primary={`Zimmer ${res.room} | ${res.dateFrom} ${res.fromTime?.slice(0,5)} - ${res.toTime?.slice(0,5)}`}
-                secondary={<>
-                  Teilnehmer: {res.participants}<br/>
-                  Bemerkung: {res.remark || "-"}
-                </>}
-              />
+              <Box>
+                <Typography variant="h6" fontWeight={600} color="primary.main" sx={{ textShadow: 'none' }}>
+                  Zimmer {res.room}
+                </Typography>
+                <Typography variant="body1" color="#fff" fontWeight={500}>
+                  {res.dateFrom} {res.fromTime?.slice(0,5)} - {res.toTime?.slice(0,5)}
+                </Typography>
+                <Typography variant="body2" color="secondary.main">
+                  Teilnehmer: {res.participants}
+                </Typography>
+                {res.remark && (
+                  <Typography variant="body2" color="text.secondary">
+                    Bemerkung: {res.remark}
+                  </Typography>
+                )}
+              </Box>
             </ListItem>
           ))}
         </List>
