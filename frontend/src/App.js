@@ -12,6 +12,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminEditReservationPage from "./pages/AdminEditReservationPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import RoomsOverviewPage from "./pages/RoomsOverviewPage";
+import MeineBuchungenPage from "./pages/MeineBuchungenPage";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           </ProtectedRoute>
         } />
         <Route path="/rooms" element={<ProtectedRoute><RoomsOverviewPage /></ProtectedRoute>} />
+        <Route path="/meinebuchungen" element={<ProtectedRoute><MeineBuchungenPage /></ProtectedRoute>} />
       </Routes>
     </Router>
   );

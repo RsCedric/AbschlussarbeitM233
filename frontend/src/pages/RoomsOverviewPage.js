@@ -7,11 +7,11 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 const ROOMS = [
-  { number: 101, capacity: 4 },
-  { number: 102, capacity: 6 },
-  { number: 103, capacity: 8 },
-  { number: 104, capacity: 10 },
-  { number: 105, capacity: 12 },
+  { number: 101, name: 'Creative Space', capacity: 4 },
+  { number: 102, name: 'Focus Room', capacity: 6 },
+  { number: 103, name: 'Inspire Suite', capacity: 8 },
+  { number: 104, name: 'Vision Room', capacity: 10 },
+  { number: 105, name: 'Connect Lounge', capacity: 12 },
 ];
 
 const RoomsOverviewPage = () => {
@@ -140,22 +140,36 @@ const RoomsOverviewPage = () => {
             return (
               <Box
                 key={room.number}
-                sx={{ mb: 2, p: 2, border: "1px solid #ccc", borderRadius: 2 }}
+                sx={{
+                  mb: 3,
+                  p: 3,
+                  borderRadius: 4,
+                  boxShadow: '0 2px 12px 0 #00000033',
+                  background: 'linear-gradient(90deg, #232323 60%, #181818 100%)',
+                  border: '1.5px solid',
+                  borderColor: 'primary.main',
+                  position: 'relative',
+                  transition: 'box-shadow 0.3s',
+                }}
               >
-                <Typography variant="h6">
-                  Zimmer {room.number} (max. {room.capacity} Personen)
+                <Typography
+                  variant="h5"
+                  fontWeight={600}
+                  sx={{
+                    color: 'primary.main',
+                    textShadow: 'none',
+                    mb: 1,
+                  }}
+                >
+                  {room.name} <span style={{fontWeight:400, fontSize:18, color:'#fff'}}>(max. {room.capacity} Personen)</span>
                   {isAvailable ? (
-                    <Chip label="Verfügbar" color="success" sx={{ ml: 2 }} />
+                    <Chip label="Verfügbar" color="success" sx={{ ml: 2, fontWeight: 500, fontSize: 16, px: 2, bgcolor: '#232323', color: 'success.main', border: '1px solid #2e7d32' }} />
                   ) : (
-                    <Chip label="Belegt" color="error" sx={{ ml: 2 }} />
+                    <Chip label="Belegt" color="error" sx={{ ml: 2, fontWeight: 500, fontSize: 16, px: 2, bgcolor: '#232323', color: 'error.main', border: '1px solid #d32f2f' }} />
                   )}
                 </Typography>
-                {/* Debug-Ausgabe: API-Response als JSON anzeigen */}
-                <pre style={{ background: '#f5f5f5', fontSize: 12, padding: 8, borderRadius: 4, marginBottom: 8 }}>
-                  {JSON.stringify(resList, null, 2)}
-                </pre>
                 {isAvailable ? (
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="body1" color="text.secondary" sx={{mb:1}}>
                     Keine Buchungen im gewählten Zeitraum.
                   </Typography>
                 ) : (
@@ -163,13 +177,21 @@ const RoomsOverviewPage = () => {
                     {resList.map(r => (
                       <ListItem
                         key={r.id}
-                        sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          bgcolor: 'rgba(255,255,255,0.01)',
+                          borderRadius: 2,
+                          mb: 1,
+                          boxShadow: 'none',
+                        }}
                       >
                         <Box>
-                          <Typography variant="body2">
+                          <Typography variant="body1" fontWeight={500} color="#fff">
                             {r.dateFrom} {r.fromTime?.slice(0,5)} - {r.toTime?.slice(0,5)}
                           </Typography>
-                          <Typography variant="body2">
+                          <Typography variant="body2" color="secondary.main">
                             Teilnehmer: {r.participants}
                           </Typography>
                           {r.remark && (
@@ -178,7 +200,7 @@ const RoomsOverviewPage = () => {
                             </Typography>
                           )}
                         </Box>
-                        {((r.user && r.user.id === user.id) || r.user_id === user.id) && (
+                        {((r.user && user && r.user.id === user.id) || r.user_id === (user && user.id)) && (
                           <Box>
                             <IconButton
                               color="primary"
