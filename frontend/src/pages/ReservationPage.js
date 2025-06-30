@@ -61,6 +61,7 @@ const ReservationPage = () => {
         remark,
         participants,
         booker,
+        userId: user.id
       });
       setSuccess("Reservierung erfolgreich!");
       setTimeout(() => {

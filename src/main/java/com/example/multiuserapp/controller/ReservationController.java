@@ -2,6 +2,8 @@ package com.example.multiuserapp.controller;
 
 import com.example.multiuserapp.model.Reservation;
 import com.example.multiuserapp.service.ReservationService;
+import com.example.multiuserapp.model.User;
+import com.example.multiuserapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,9 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @PostMapping
     public ResponseEntity<?> createReservation(@RequestBody Map<String, Object> payload) {
         try {
@@ -29,7 +34,12 @@ public class ReservationController {
             int participants = (int) payload.get("participants");
             String remark = payload.get("remark") != null ? (String) payload.get("remark") : "";
             Map<String, String> booker = (Map<String, String>) payload.get("booker");
-
+            Long userId = payload.get("userId") != null ? ((Number) payload.get("userId")).longValue() : null;
+            System.out.println("UserId aus Payload: " + userId);
+            User user = null;
+            if (userId != null) {
+                user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+            }
             LocalDate dateFrom = LocalDate.parse(dateFromStr);
             LocalDate dateTo = LocalDate.parse(dateToStr);
             LocalTime from = LocalTime.parse(fromStr);
@@ -50,8 +60,10 @@ public class ReservationController {
             reservation.setBookerName(booker.get("name"));
             reservation.setBookerAddress(booker.get("address"));
             reservation.setBookerEmail(booker.get("email"));
+            if (user != null) reservation.setUser(user);
 
             reservationService.saveReservation(reservation);
+            System.out.println("Reservation gespeichert mit user_id: " + (reservation.getUser() != null ? reservation.getUser().getId() : null));
             return ResponseEntity.ok(Map.of("message", "Reservierung erfolgreich!"));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
@@ -84,6 +96,39 @@ public class ReservationController {
             }
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    @GetMapping("/user/{userId}")
+    public List<Reservation> getReservationsByUserId(@PathVariable Long userId) {
+        System.out.println("API CALL: GET /api/reservations/user/" + userId);
+        List<Reservation> result = reservationService.getReservationsByUserId(userId);
+        System.out.println("Returned Reservations: " + result.size());
+        return result;
+    }
+
+    @DeleteMapping("/{reservationId}")
+    public void deleteReservation(@PathVariable Long reservationId) {
+        System.out.println("API CALL: DELETE /api/reservations/" + reservationId);
+        reservationService.deleteReservation(reservationId);
+        System.out.println("Deleted Reservation: " + reservationId);
+    }
+
+    @PatchMapping("/{reservationId}")
+    public Reservation updateReservation(@PathVariable Long reservationId, @RequestBody Reservation updatedReservation) {
+        System.out.println("API CALL: PATCH /api/reservations/" + reservationId);
+        Reservation res = reservationService.updateReservation(reservationId, updatedReservation);
+        System.out.println("Updated Reservation: " + res.getId());
+        return res;
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getReservationById(@PathVariable Long id) {
+        Reservation reservation = reservationService.getReservationById(id);
+        if (reservation != null) {
+            return ResponseEntity.ok(reservation);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 } 

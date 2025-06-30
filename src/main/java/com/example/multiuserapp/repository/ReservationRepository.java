@@ -11,4 +11,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findByRoomAndDateFromLessThanEqualAndDateToGreaterThanEqualAndFromTimeLessThanAndToTimeGreaterThan(
         int room, LocalDate date, LocalDate date2, LocalTime to, LocalTime from);
     List<Reservation> findByBookerEmail(String bookerEmail);
+    List<Reservation> findByUser_Id(Long userId);
 } 

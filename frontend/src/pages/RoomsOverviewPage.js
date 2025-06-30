@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Box, Typography, TextField, List, ListItem, ListItemText, Chip, Grid, Button, Tabs, Tab, IconButton } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
@@ -72,7 +73,7 @@ const RoomsOverviewPage = () => {
   const handleDeleteReservation = async (reservationId) => {
     if (window.confirm("Möchten Sie diese Reservierung wirklich löschen?")) {
       try {
-        await api.delete(`/reservations/${reservationId}?userEmail=${user.email}`);
+        await api.delete(`/api/reservations/${reservationId}?userEmail=${encodeURIComponent(user.email)}`);
         // Aktualisiere die Liste der eigenen Reservierungen
         setMyReservations(prev => prev.filter(r => r.id !== reservationId));
         // Aktualisiere auch die Raumübersicht
@@ -134,8 +135,7 @@ const RoomsOverviewPage = () => {
             return (
               <Box
                 key={room.number}
-                sx={{ mb: 2, p: 2, border: "1px solid #ccc", borderRadius: 2, cursor: "pointer", '&:hover': { background: '#f5f5f5' } }}
-                onClick={() => navigate(`/reservation?room=${room.number}&date=${dateFrom}`)}
+                sx={{ mb: 2, p: 2, border: "1px solid #ccc", borderRadius: 2 }}
               >
                 <Typography variant="h6">
                   Zimmer {room.number} (max. {room.capacity} Personen)
@@ -145,16 +145,54 @@ const RoomsOverviewPage = () => {
                     <Chip label="Belegt" color="error" sx={{ ml: 2 }} />
                   )}
                 </Typography>
+                {/* Debug-Ausgabe: API-Response als JSON anzeigen */}
+                <pre style={{ background: '#f5f5f5', fontSize: 12, padding: 8, borderRadius: 4, marginBottom: 8 }}>
+                  {JSON.stringify(resList, null, 2)}
+                </pre>
                 {isAvailable ? (
-                  <Typography variant="body2" color="text.secondary">Keine Buchungen im gewählten Zeitraum.</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Keine Buchungen im gewählten Zeitraum.
+                  </Typography>
                 ) : (
                   <List dense>
                     {resList.map(r => (
-                      <ListItem key={r.id + r.date}>
-                        <ListItemText
-                          primary={`Am ${r.date} von ${r.fromTime?.slice(0,5)} bis ${r.toTime?.slice(0,5)}`}
-                          secondary={`Teilnehmer: ${r.participants}`}
-                        />
+                      <ListItem
+                        key={r.id}
+                        sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
+                      >
+                        <Box>
+                          <Typography variant="body2">
+                            {r.dateFrom} {r.fromTime?.slice(0,5)} - {r.toTime?.slice(0,5)}
+                          </Typography>
+                          <Typography variant="body2">
+                            Teilnehmer: {r.participants}
+                          </Typography>
+                          {r.remark && (
+                            <Typography variant="body2" color="text.secondary">
+                              Bemerkung: {r.remark}
+                            </Typography>
+                          )}
+                        </Box>
+                        {((r.user && r.user.id === user.id) || r.user_id === user.id) && (
+                          <Box>
+                            <IconButton
+                              color="primary"
+                              title="Buchung bearbeiten"
+                              aria-label="Buchung bearbeiten"
+                              onClick={() => navigate(`/edit-reservation/${r.id}`)}
+                            >
+                              <EditIcon />
+                            </IconButton>
+                            <IconButton
+                              color="error"
+                              title="Buchung löschen"
+                              aria-label="Buchung löschen"
+                              onClick={() => handleDeleteReservation(r.id)}
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                          </Box>
+                        )}
                       </ListItem>
                     ))}
                   </List>
