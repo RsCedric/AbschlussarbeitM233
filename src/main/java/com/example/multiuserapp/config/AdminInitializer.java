@@ -16,13 +16,14 @@ public class AdminInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if (adminUserRepository.findByUsername("admin").isEmpty()) {
-            AdminUser admin = new AdminUser();
+        AdminUser admin = adminUserRepository.findByUsername("admin").orElse(null);
+        if (admin == null) {
+            admin = new AdminUser();
             admin.setUsername("admin");
-            admin.setPassword(passwordEncoder.encode("admin123"));
             admin.setRole("ADMIN");
-            adminUserRepository.save(admin);
-            System.out.println("Initial admin user created: admin/admin123");
         }
+        admin.setPassword(passwordEncoder.encode("admin123"));
+        adminUserRepository.save(admin);
+        System.out.println("Admin user (admin/admin123) wurde zurückgesetzt oder angelegt.");
     }
 } 

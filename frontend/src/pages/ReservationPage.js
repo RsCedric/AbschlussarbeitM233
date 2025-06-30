@@ -61,11 +61,11 @@ const ReservationPage = () => {
         remark,
         participants,
         booker,
+        userId: user.id
       });
       setSuccess("Reservierung erfolgreich!");
       setTimeout(() => {
         navigate("/rooms?tab=my");
-        window.location.reload();
       }, 1000);
     } catch (err) {
       setError(err.response?.data?.error || "Reservierung fehlgeschlagen");
@@ -91,7 +91,7 @@ const ReservationPage = () => {
           ))}
         </TextField>
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item>
             <TextField
               label="Von-Datum"
               type="date"
@@ -102,7 +102,7 @@ const ReservationPage = () => {
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item>
             <TextField
               label="Bis-Datum"
               type="date"
@@ -115,7 +115,7 @@ const ReservationPage = () => {
           </Grid>
         </Grid>
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item>
             <TextField
               label="Von (HH:MM)"
               type="time"
@@ -126,7 +126,7 @@ const ReservationPage = () => {
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item>
             <TextField
               label="Bis (HH:MM)"
               type="time"

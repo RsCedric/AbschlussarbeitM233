@@ -16,7 +16,13 @@ public class AdminUserService {
 
     public boolean authenticateAdmin(String username, String password) {
         Optional<AdminUser> adminOpt = adminUserRepository.findByUsername(username);
-        return adminOpt.isPresent() && passwordEncoder.matches(password, adminOpt.get().getPassword());
+        System.out.println("Admin-Login-Versuch: username=" + username + ", gefunden=" + adminOpt.isPresent());
+        if (adminOpt.isPresent()) {
+            boolean match = passwordEncoder.matches(password, adminOpt.get().getPassword());
+            System.out.println("Passwort-Match: " + match);
+            return match;
+        }
+        return false;
     }
 
     public AdminUser findByUsername(String username) {

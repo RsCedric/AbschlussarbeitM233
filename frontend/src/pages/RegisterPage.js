@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import api from '../api/axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { Box, Paper, Typography, TextField, Button } from '@mui/material';
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('');
@@ -28,35 +29,44 @@ const RegisterPage = () => {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={e => setUsername(e.target.value)}
-          required
-        />
-        <input
-          type="email"
-          placeholder="E-Mail"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Register</button>
-      </form>
-      {error && <div style={{color: 'red'}}>{error}</div>}
-      {success && <div style={{color: 'green'}}>{success}</div>}
-    </div>
+    <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: 'background.default' }}>
+      <Paper elevation={6} sx={{ p: 4, minWidth: 320, maxWidth: 400, width: '100%', bgcolor: 'background.paper' }}>
+        <Typography variant="h5" align="center" gutterBottom>Register</Typography>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            label="Username"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            fullWidth
+            margin="normal"
+            required
+          />
+          <TextField
+            label="E-Mail"
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            fullWidth
+            margin="normal"
+            required
+          />
+          <TextField
+            label="Password"
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            fullWidth
+            margin="normal"
+            required
+          />
+          <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
+            Register
+          </Button>
+        </form>
+        {error && <Typography color="error" align="center" sx={{ mt: 2 }}>{error}</Typography>}
+        {success && <Typography color="success.main" align="center" sx={{ mt: 2 }}>{success}</Typography>}
+      </Paper>
+    </Box>
   );
 };
 

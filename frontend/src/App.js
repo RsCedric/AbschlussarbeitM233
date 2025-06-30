@@ -24,6 +24,7 @@ function App() {
         <Route path="/reservation" element={<ProtectedRoute><ReservationPage /></ProtectedRoute>} />
         <Route path="/reservation/view" element={<ProtectedRoute><ViewReservationPage /></ProtectedRoute>} />
         <Route path="/reservation/edit" element={<ProtectedRoute><EditReservationPage /></ProtectedRoute>} />
+        <Route path="/edit-reservation/:id" element={<ProtectedRoute><EditReservationPage /></ProtectedRoute>} />
         <Route path="/admin" element={<AdminLoginPage />} />
         <Route path="/admin/dashboard" element={
           <ProtectedRoute adminOnly={true}>

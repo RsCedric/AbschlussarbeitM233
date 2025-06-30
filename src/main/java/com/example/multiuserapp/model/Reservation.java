@@ -3,6 +3,7 @@ package com.example.multiuserapp.model;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "reservations")
@@ -23,6 +24,11 @@ public class Reservation {
     private String bookerName;
     private String bookerAddress;
     private String bookerEmail;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private User user;
 
     // Getter & Setter
     public Long getId() { return id; }
@@ -47,4 +53,10 @@ public class Reservation {
     public void setBookerAddress(String bookerAddress) { this.bookerAddress = bookerAddress; }
     public String getBookerEmail() { return bookerEmail; }
     public void setBookerEmail(String bookerEmail) { this.bookerEmail = bookerEmail; }
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
+    @JsonProperty("user_id")
+    public Long getUserId() {
+        return user != null ? user.getId() : null;
+    }
 } 

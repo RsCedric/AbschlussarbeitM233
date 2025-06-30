@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import api from '../api/axios';
 
 const AdminLoginPage = () => {
   const [username, setUsername] = useState('');
@@ -9,13 +10,17 @@ const AdminLoginPage = () => {
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    if (username === 'admin' && password === 'Admin123') {
-      login({ username: 'admin' }, true);
+    try {
+      const response = await api.post('/admin/login', { username, password });
+      // Bei Erfolg: Admin-Login setzen und weiterleiten
+      login({ username }, true);
+      // Optional: Token speichern, wenn du später JWT nutzt
+      // localStorage.setItem('adminToken', response.data.token);
       navigate('/admin/dashboard');
-    } else {
+    } catch (err) {
       setError('Falscher Admin-Login!');
     }
   };

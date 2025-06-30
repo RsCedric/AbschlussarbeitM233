@@ -43,10 +43,42 @@ public class ReservationService {
 
     public boolean deleteReservation(Long reservationId, String userEmail) {
         Optional<Reservation> reservation = reservationRepository.findById(reservationId);
-        if (reservation.isPresent() && reservation.get().getBookerEmail().equals(userEmail)) {
-            reservationRepository.deleteById(reservationId);
-            return true;
+        if (reservation.isPresent()) {
+            System.out.println("Delete-Request: userEmail=" + userEmail + ", Reservation-Booker=" + reservation.get().getBookerEmail());
+            if (reservation.get().getBookerEmail().equals(userEmail)) {
+                reservationRepository.deleteById(reservationId);
+                return true;
+            }
         }
         return false;
+    }
+
+    public List<Reservation> getReservationsByUserId(Long userId) {
+        return reservationRepository.findByUser_Id(userId);
+    }
+
+    public void deleteReservation(Long reservationId) {
+        reservationRepository.deleteById(reservationId);
+    }
+
+    public Reservation updateReservation(Long reservationId, Reservation updatedReservation) {
+        Reservation existing = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new RuntimeException("Reservation not found"));
+        existing.setRoom(updatedReservation.getRoom());
+        existing.setDateFrom(updatedReservation.getDateFrom());
+        existing.setDateTo(updatedReservation.getDateTo());
+        existing.setFromTime(updatedReservation.getFromTime());
+        existing.setToTime(updatedReservation.getToTime());
+        existing.setParticipants(updatedReservation.getParticipants());
+        existing.setRemark(updatedReservation.getRemark());
+        // Optional: Booker Infos
+        existing.setBookerName(updatedReservation.getBookerName());
+        existing.setBookerAddress(updatedReservation.getBookerAddress());
+        existing.setBookerEmail(updatedReservation.getBookerEmail());
+        return reservationRepository.save(existing);
+    }
+
+    public Reservation getReservationById(Long id) {
+        return reservationRepository.findById(id).orElse(null);
     }
 } 
