@@ -28,7 +28,11 @@ public class UserController {
     public ResponseEntity<?> login(@RequestBody Map<String, String> loginData) {
         try {
             User user = userService.loginUser(loginData.get("username"), loginData.get("password"));
-            return ResponseEntity.ok(Map.of("id", user.getId(), "username", user.getUsername()));
+            return ResponseEntity.ok(Map.of(
+                "id", user.getId(), 
+                "username", user.getUsername(),
+                "email", user.getEmail()
+            ));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }

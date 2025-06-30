@@ -21,9 +21,9 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/reservation" element={<ReservationPage />} />
-        <Route path="/reservation/view" element={<ViewReservationPage />} />
-        <Route path="/reservation/edit" element={<EditReservationPage />} />
+        <Route path="/reservation" element={<ProtectedRoute><ReservationPage /></ProtectedRoute>} />
+        <Route path="/reservation/view" element={<ProtectedRoute><ViewReservationPage /></ProtectedRoute>} />
+        <Route path="/reservation/edit" element={<ProtectedRoute><EditReservationPage /></ProtectedRoute>} />
         <Route path="/admin" element={<AdminLoginPage />} />
         <Route path="/admin/dashboard" element={
           <ProtectedRoute adminOnly={true}>
@@ -35,7 +35,7 @@ function App() {
             <AdminEditReservationPage />
           </ProtectedRoute>
         } />
-        <Route path="/rooms" element={<RoomsOverviewPage />} />
+        <Route path="/rooms" element={<ProtectedRoute><RoomsOverviewPage /></ProtectedRoute>} />
       </Routes>
     </Router>
   );
