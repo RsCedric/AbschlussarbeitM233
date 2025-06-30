@@ -22,24 +22,27 @@ public class ReservationController {
     public ResponseEntity<?> createReservation(@RequestBody Map<String, Object> payload) {
         try {
             int room = (int) payload.get("room");
-            String dateStr = (String) payload.get("date");
+            String dateFromStr = (String) payload.get("dateFrom");
+            String dateToStr = (String) payload.get("dateTo");
             String fromStr = (String) payload.get("from");
             String toStr = (String) payload.get("to");
             int participants = (int) payload.get("participants");
-            String remark = (String) payload.get("remark");
+            String remark = payload.get("remark") != null ? (String) payload.get("remark") : "";
             Map<String, String> booker = (Map<String, String>) payload.get("booker");
 
-            LocalDate date = LocalDate.parse(dateStr);
+            LocalDate dateFrom = LocalDate.parse(dateFromStr);
+            LocalDate dateTo = LocalDate.parse(dateToStr);
             LocalTime from = LocalTime.parse(fromStr);
             LocalTime to = LocalTime.parse(toStr);
 
-            if (!reservationService.isRoomAvailable(room, date, from, to)) {
+            if (!reservationService.isRoomAvailable(room, dateFrom, dateTo, from, to)) {
                 return ResponseEntity.badRequest().body(Map.of("error", "Raum ist im gewünschten Zeitraum bereits belegt!"));
             }
 
             Reservation reservation = new Reservation();
             reservation.setRoom(room);
-            reservation.setDate(date);
+            reservation.setDateFrom(dateFrom);
+            reservation.setDateTo(dateTo);
             reservation.setFromTime(from);
             reservation.setToTime(to);
             reservation.setParticipants(participants);

@@ -12,7 +12,8 @@ public class Reservation {
     private Long id;
 
     private int room;
-    private LocalDate date;
+    private LocalDate dateFrom;
+    private LocalDate dateTo;
     private LocalTime fromTime;
     private LocalTime toTime;
     private int participants;
@@ -28,8 +29,10 @@ public class Reservation {
     public void setId(Long id) { this.id = id; }
     public int getRoom() { return room; }
     public void setRoom(int room) { this.room = room; }
-    public LocalDate getDate() { return date; }
-    public void setDate(LocalDate date) { this.date = date; }
+    public LocalDate getDateFrom() { return dateFrom; }
+    public void setDateFrom(LocalDate dateFrom) { this.dateFrom = dateFrom; }
+    public LocalDate getDateTo() { return dateTo; }
+    public void setDateTo(LocalDate dateTo) { this.dateTo = dateTo; }
     public LocalTime getFromTime() { return fromTime; }
     public void setFromTime(LocalTime fromTime) { this.fromTime = fromTime; }
     public LocalTime getToTime() { return toTime; }

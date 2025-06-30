@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
-    List<Reservation> findByRoomAndDate(int room, LocalDate date);
-    List<Reservation> findByRoomAndDateAndFromTimeLessThanAndToTimeGreaterThan(int room, LocalDate date, LocalTime to, LocalTime from);
+    List<Reservation> findByRoomAndDateFromLessThanEqualAndDateToGreaterThanEqual(int room, LocalDate dateTo, LocalDate dateFrom);
+    List<Reservation> findByRoomAndDateFromLessThanEqualAndDateToGreaterThanEqualAndFromTimeLessThanAndToTimeGreaterThan(
+        int room, LocalDate dateTo, LocalDate dateFrom, LocalTime to, LocalTime from);
 } 
