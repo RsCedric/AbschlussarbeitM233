@@ -71,9 +71,14 @@ const RoomsOverviewPage = () => {
   }, [user]);
 
   const handleDeleteReservation = async (reservationId) => {
+    console.log("User-Objekt beim Löschen:", user);
+    if (!user || !user.email) {
+      alert("Kein Benutzer eingeloggt oder E-Mail nicht verfügbar!");
+      return;
+    }
     if (window.confirm("Möchten Sie diese Reservierung wirklich löschen?")) {
       try {
-        await api.delete(`/api/reservations/${reservationId}?userEmail=${encodeURIComponent(user.email)}`);
+        await api.delete(`/reservations/${reservationId}?userEmail=${encodeURIComponent(user.email)}`);
         // Aktualisiere die Liste der eigenen Reservierungen
         setMyReservations(prev => prev.filter(r => r.id !== reservationId));
         // Aktualisiere auch die Raumübersicht
@@ -108,7 +113,7 @@ const RoomsOverviewPage = () => {
       {activeTab === 0 && (
         <>
           <Grid container spacing={2} sx={{ mb: 3 }}>
-            <Grid item xs={6}>
+            <Grid item>
               <TextField
                 label="Von-Datum"
                 type="date"
@@ -118,7 +123,7 @@ const RoomsOverviewPage = () => {
                 InputLabelProps={{ shrink: true }}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item>
               <TextField
                 label="Bis-Datum"
                 type="date"

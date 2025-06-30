@@ -107,13 +107,6 @@ public class ReservationController {
         return result;
     }
 
-    @DeleteMapping("/{reservationId}")
-    public void deleteReservation(@PathVariable Long reservationId) {
-        System.out.println("API CALL: DELETE /api/reservations/" + reservationId);
-        reservationService.deleteReservation(reservationId);
-        System.out.println("Deleted Reservation: " + reservationId);
-    }
-
     @PatchMapping("/{reservationId}")
     public Reservation updateReservation(@PathVariable Long reservationId, @RequestBody Reservation updatedReservation) {
         System.out.println("API CALL: PATCH /api/reservations/" + reservationId);

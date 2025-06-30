@@ -78,7 +78,7 @@ const EditReservationPage = () => {
           ))}
         </TextField>
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item>
             <TextField
               label="Von-Datum"
               type="date"
@@ -90,7 +90,7 @@ const EditReservationPage = () => {
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item>
             <TextField
               label="Bis-Datum"
               type="date"
@@ -104,7 +104,7 @@ const EditReservationPage = () => {
           </Grid>
         </Grid>
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item>
             <TextField
               label="Von (HH:MM)"
               type="time"
@@ -116,7 +116,7 @@ const EditReservationPage = () => {
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item>
             <TextField
               label="Bis (HH:MM)"
               type="time"

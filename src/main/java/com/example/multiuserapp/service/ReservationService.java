@@ -43,9 +43,12 @@ public class ReservationService {
 
     public boolean deleteReservation(Long reservationId, String userEmail) {
         Optional<Reservation> reservation = reservationRepository.findById(reservationId);
-        if (reservation.isPresent() && reservation.get().getBookerEmail().equals(userEmail)) {
-            reservationRepository.deleteById(reservationId);
-            return true;
+        if (reservation.isPresent()) {
+            System.out.println("Delete-Request: userEmail=" + userEmail + ", Reservation-Booker=" + reservation.get().getBookerEmail());
+            if (reservation.get().getBookerEmail().equals(userEmail)) {
+                reservationRepository.deleteById(reservationId);
+                return true;
+            }
         }
         return false;
     }
