@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import api from '../api/axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import { Box, Paper, Typography, TextField, Button } from '@mui/material';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -16,7 +15,6 @@ const LoginPage = () => {
     setError('');
     try {
       const response = await api.post('/users/login', { username, password });
-      // Speichere User-Daten inklusive E-Mail
       login({ 
         username: response.data.username, 
         email: response.data.email,
@@ -32,34 +30,84 @@ const LoginPage = () => {
   };
 
   return (
-    <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: 'background.default' }}>
-      <Paper elevation={6} sx={{ p: 4, minWidth: 320, maxWidth: 400, width: '100%', bgcolor: 'background.paper' }}>
-        <Typography variant="h5" align="center" gutterBottom>Login</Typography>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #121212 60%, #ff00cc 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ background: '#1e1e1e', borderRadius: 18, boxShadow: '0 0 32px #ff00cc55', padding: 40, width: 370, maxWidth: '90vw', border: '1.5px solid #ff00cc' }}>
+        <h2 style={{ color: '#ff00cc', textAlign: 'center', marginBottom: 32, letterSpacing: 1 }}>Login</h2>
         <form onSubmit={handleSubmit}>
-          <TextField
-            label="Username"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-            fullWidth
-            margin="normal"
-            required
-          />
-          <TextField
-            label="Password"
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            fullWidth
-            margin="normal"
-            required
-          />
-          <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
+          <div style={{ marginBottom: 22 }}>
+            <label style={{ color: '#fff', fontWeight: 500 }}>Username:</label><br />
+            <input
+              type="text"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              required
+              style={{
+                width: '100%',
+                padding: '12px 14px',
+                borderRadius: 8,
+                border: '1.5px solid #ff00cc',
+                background: '#121212',
+                color: '#fff',
+                fontSize: 16,
+                outline: 'none',
+                marginTop: 6,
+                marginBottom: 2,
+                transition: 'border 0.2s',
+              }}
+              onFocus={e => e.target.style.border = '2px solid #ff00cc'}
+              onBlur={e => e.target.style.border = '1.5px solid #ff00cc'}
+            />
+          </div>
+          <div style={{ marginBottom: 22 }}>
+            <label style={{ color: '#fff', fontWeight: 500 }}>Passwort:</label><br />
+            <input
+              type="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+              style={{
+                width: '100%',
+                padding: '12px 14px',
+                borderRadius: 8,
+                border: '1.5px solid #ff00cc',
+                background: '#121212',
+                color: '#fff',
+                fontSize: 16,
+                outline: 'none',
+                marginTop: 6,
+                marginBottom: 2,
+                transition: 'border 0.2s',
+              }}
+              onFocus={e => e.target.style.border = '2px solid #ff00cc'}
+              onBlur={e => e.target.style.border = '1.5px solid #ff00cc'}
+            />
+          </div>
+          {error && <div style={{ color: '#ff3366', marginBottom: 18, textAlign: 'center', fontWeight: 500 }}>{error}</div>}
+          <button
+            type="submit"
+            style={{
+              width: '100%',
+              padding: '14px 0',
+              background: 'linear-gradient(90deg, #ff00cc 60%, #b2008f 100%)',
+              color: '#fff',
+              border: 'none',
+              borderRadius: 8,
+              fontSize: 18,
+              fontWeight: 600,
+              letterSpacing: 1,
+              boxShadow: '0 2px 12px #ff00cc44',
+              cursor: 'pointer',
+              marginTop: 10,
+              transition: 'background 0.2s',
+            }}
+            onMouseOver={e => e.target.style.background = 'linear-gradient(90deg, #b2008f 60%, #ff00cc 100%)'}
+            onMouseOut={e => e.target.style.background = 'linear-gradient(90deg, #ff00cc 60%, #b2008f 100%)'}
+          >
             Login
-          </Button>
+          </button>
         </form>
-        {error && <Typography color="error" align="center" sx={{ mt: 2 }}>{error}</Typography>}
-      </Paper>
-    </Box>
+      </div>
+    </div>
   );
 };
 
