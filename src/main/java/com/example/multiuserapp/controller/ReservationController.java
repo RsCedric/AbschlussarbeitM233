@@ -124,4 +124,9 @@ public class ReservationController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/all")
+    public List<Reservation> getAllReservations() {
+        return reservationService.getAllReservations();
+    }
 } 

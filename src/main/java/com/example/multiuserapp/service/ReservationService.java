@@ -81,4 +81,8 @@ public class ReservationService {
     public Reservation getReservationById(Long id) {
         return reservationRepository.findById(id).orElse(null);
     }
+
+    public List<Reservation> getAllReservations() {
+        return reservationRepository.findAll();
+    }
 } 
