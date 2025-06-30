@@ -12,7 +12,8 @@ const ROOMS = [
 
 const ReservationPage = () => {
   const [room, setRoom] = useState(ROOMS[0].number);
-  const [date, setDate] = useState("");
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [participants, setParticipants] = useState(1);
@@ -30,12 +31,16 @@ const ReservationPage = () => {
     e.preventDefault();
     setError("");
     setSuccess("");
-    if (!date || !from || !to) {
-      setError("Bitte Datum und Uhrzeiten angeben.");
+    if (!dateFrom || !dateTo || !from || !to) {
+      setError("Bitte Zeitraum und Uhrzeiten angeben.");
       return;
     }
-    if (remark.length < 10 || remark.length > 200) {
-      setError("Bemerkung muss zwischen 10 und 200 Zeichen lang sein.");
+    if (dateFrom > dateTo) {
+      setError("Das Von-Datum darf nicht nach dem Bis-Datum liegen.");
+      return;
+    }
+    if (remark.length > 0 && (remark.length < 10 || remark.length > 200)) {
+      setError("Bemerkung muss zwischen 10 und 200 Zeichen lang sein, wenn sie ausgefüllt wird.");
       return;
     }
     if (!booker.name || !booker.address || !booker.email) {
@@ -45,7 +50,8 @@ const ReservationPage = () => {
     try {
       await api.post("/reservations", {
         room,
-        date,
+        dateFrom,
+        dateTo,
         from,
         to,
         remark,
@@ -76,15 +82,30 @@ const ReservationPage = () => {
             </MenuItem>
           ))}
         </TextField>
-        <TextField
-          label="Datum"
-          type="date"
-          value={date}
-          onChange={e => setDate(e.target.value)}
-          fullWidth
-          margin="normal"
-          InputLabelProps={{ shrink: true }}
-        />
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <TextField
+              label="Von-Datum"
+              type="date"
+              value={dateFrom}
+              onChange={e => setDateFrom(e.target.value)}
+              fullWidth
+              margin="normal"
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              label="Bis-Datum"
+              type="date"
+              value={dateTo}
+              onChange={e => setDateTo(e.target.value)}
+              fullWidth
+              margin="normal"
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
+        </Grid>
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <TextField
@@ -147,14 +168,14 @@ const ReservationPage = () => {
           />
         </Box>
         <TextField
-          label="Bemerkung"
+          label="Bemerkung (optional)"
           value={remark}
           onChange={e => setRemark(e.target.value)}
           fullWidth
           margin="normal"
           multiline
           minRows={2}
-          inputProps={{ minLength: 10, maxLength: 200 }}
+          inputProps={{ maxLength: 200 }}
         />
         {error && <div style={{ color: "red", marginBottom: 10 }}>{error}</div>}
         {success && <div style={{ color: "green", marginBottom: 10 }}>{success}</div>}

@@ -13,9 +13,9 @@ public class ReservationService {
     @Autowired
     private ReservationRepository reservationRepository;
 
-    public boolean isRoomAvailable(int room, LocalDate date, LocalTime from, LocalTime to) {
-        List<Reservation> overlapping = reservationRepository.findByRoomAndDateAndFromTimeLessThanAndToTimeGreaterThan(
-            room, date, to, from
+    public boolean isRoomAvailable(int room, LocalDate dateFrom, LocalDate dateTo, LocalTime from, LocalTime to) {
+        List<Reservation> overlapping = reservationRepository.findByRoomAndDateFromLessThanEqualAndDateToGreaterThanEqualAndFromTimeLessThanAndToTimeGreaterThan(
+            room, dateTo, dateFrom, to, from
         );
         return overlapping.isEmpty();
     }
@@ -25,6 +25,6 @@ public class ReservationService {
     }
 
     public List<Reservation> getReservationsForRoomAndDate(int room, LocalDate date) {
-        return reservationRepository.findByRoomAndDate(room, date);
+        return reservationRepository.findByRoomAndDateFromLessThanEqualAndDateToGreaterThanEqual(room, date, date);
     }
 } 
