@@ -140,22 +140,36 @@ const RoomsOverviewPage = () => {
             return (
               <Box
                 key={room.number}
-                sx={{ mb: 2, p: 2, border: "1px solid #ccc", borderRadius: 2 }}
+                sx={{
+                  mb: 3,
+                  p: 3,
+                  borderRadius: 4,
+                  boxShadow: isAvailable ? '0 0 16px #00fff7' : '0 0 16px #ff00cc',
+                  background: 'linear-gradient(90deg, #1e1e1e 60%, #121212 100%)',
+                  border: '2px solid',
+                  borderColor: isAvailable ? 'secondary.main' : 'primary.main',
+                  position: 'relative',
+                  transition: 'box-shadow 0.3s',
+                }}
               >
-                <Typography variant="h6">
-                  Zimmer {room.number} (max. {room.capacity} Personen)
+                <Typography
+                  variant="h5"
+                  fontWeight={700}
+                  sx={{
+                    color: isAvailable ? 'secondary.main' : 'primary.main',
+                    textShadow: isAvailable ? '0 0 8px #00fff7' : '0 0 8px #ff00cc',
+                    mb: 1,
+                  }}
+                >
+                  Zimmer {room.number} <span style={{fontWeight:400, fontSize:18}}>(max. {room.capacity} Personen)</span>
                   {isAvailable ? (
-                    <Chip label="Verfügbar" color="success" sx={{ ml: 2 }} />
+                    <Chip label="Verfügbar" color="success" sx={{ ml: 2, fontWeight: 600, fontSize: 16, px: 2, boxShadow: '0 0 8px #00fff7' }} />
                   ) : (
-                    <Chip label="Belegt" color="error" sx={{ ml: 2 }} />
+                    <Chip label="Belegt" color="error" sx={{ ml: 2, fontWeight: 600, fontSize: 16, px: 2, boxShadow: '0 0 8px #ff00cc' }} />
                   )}
                 </Typography>
-                {/* Debug-Ausgabe: API-Response als JSON anzeigen */}
-                <pre style={{ background: '#f5f5f5', fontSize: 12, padding: 8, borderRadius: 4, marginBottom: 8 }}>
-                  {JSON.stringify(resList, null, 2)}
-                </pre>
                 {isAvailable ? (
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="body1" color="text.secondary" sx={{mb:1}}>
                     Keine Buchungen im gewählten Zeitraum.
                   </Typography>
                 ) : (
@@ -163,13 +177,21 @@ const RoomsOverviewPage = () => {
                     {resList.map(r => (
                       <ListItem
                         key={r.id}
-                        sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          bgcolor: 'rgba(255,255,255,0.01)',
+                          borderRadius: 2,
+                          mb: 1,
+                          boxShadow: '0 0 8px #ff00cc22',
+                        }}
                       >
                         <Box>
-                          <Typography variant="body2">
+                          <Typography variant="body1" fontWeight={600} color="primary.main">
                             {r.dateFrom} {r.fromTime?.slice(0,5)} - {r.toTime?.slice(0,5)}
                           </Typography>
-                          <Typography variant="body2">
+                          <Typography variant="body2" color="secondary.main">
                             Teilnehmer: {r.participants}
                           </Typography>
                           {r.remark && (
@@ -178,7 +200,7 @@ const RoomsOverviewPage = () => {
                             </Typography>
                           )}
                         </Box>
-                        {((r.user && r.user.id === user.id) || r.user_id === user.id) && (
+                        {((r.user && user && r.user.id === user.id) || r.user_id === (user && user.id)) && (
                           <Box>
                             <IconButton
                               color="primary"
