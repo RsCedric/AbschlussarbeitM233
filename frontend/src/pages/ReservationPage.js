@@ -65,7 +65,6 @@ const ReservationPage = () => {
       setSuccess("Reservierung erfolgreich!");
       setTimeout(() => {
         navigate("/rooms?tab=my");
-        window.location.reload();
       }, 1000);
     } catch (err) {
       setError(err.response?.data?.error || "Reservierung fehlgeschlagen");
