@@ -4,7 +4,7 @@ const theme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#ff00cc', // Pink
+      main: '#1976d2', // Blau
       contrastText: '#fff',
     },
     secondary: {
@@ -48,22 +48,22 @@ const theme = createTheme({
           transition: 'background 0.2s, color 0.2s',
         },
         containedPrimary: {
-          background: '#ff00cc',
+          background: '#1976d2',
           color: '#fff',
           '&:hover': {
-            background: '#b2008f',
+            background: '#115293',
             color: '#fff',
             boxShadow: 'none',
           },
         },
         outlined: {
           borderWidth: 2,
-          borderColor: '#ff00cc',
-          color: '#ff00cc',
+          borderColor: '#1976d2',
+          color: '#1976d2',
           '&:hover': {
             background: '#18181b',
-            borderColor: '#b2008f',
-            color: '#b2008f',
+            borderColor: '#115293',
+            color: '#115293',
           },
         },
       },

@@ -23,9 +23,9 @@ const AdminLoginPage = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #121212 60%, #ff00cc 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #121212 60%, #1976d2 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div style={{ background: '#1e1e1e', borderRadius: 18, boxShadow: '0 0 32px #ff00cc55', padding: 40, width: 370, maxWidth: '90vw', border: '1.5px solid #ff00cc' }}>
-        <h2 style={{ color: '#ff00cc', textAlign: 'center', marginBottom: 32, letterSpacing: 1 }}>Admin Login</h2>
+        <h2 style={{ color: '#1976d2', textAlign: 'center', marginBottom: 32, letterSpacing: 1 }}>Admin Login</h2>
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: 22 }}>
             <label style={{ color: '#fff', fontWeight: 500 }}>Username:</label><br />
@@ -38,7 +38,7 @@ const AdminLoginPage = () => {
                 width: '100%',
                 padding: '12px 14px',
                 borderRadius: 8,
-                border: '1.5px solid #ff00cc',
+                border: '1.5px solid #1976d2',
                 background: '#121212',
                 color: '#fff',
                 fontSize: 16,
@@ -47,8 +47,8 @@ const AdminLoginPage = () => {
                 marginBottom: 2,
                 transition: 'border 0.2s',
               }}
-              onFocus={e => e.target.style.border = '2px solid #ff00cc'}
-              onBlur={e => e.target.style.border = '1.5px solid #ff00cc'}
+              onFocus={e => e.target.style.border = '2px solid #1976d2'}
+              onBlur={e => e.target.style.border = '1.5px solid #1976d2'}
             />
           </div>
           <div style={{ marginBottom: 22 }}>
@@ -62,7 +62,7 @@ const AdminLoginPage = () => {
                 width: '100%',
                 padding: '12px 14px',
                 borderRadius: 8,
-                border: '1.5px solid #ff00cc',
+                border: '1.5px solid #1976d2',
                 background: '#121212',
                 color: '#fff',
                 fontSize: 16,
@@ -71,8 +71,8 @@ const AdminLoginPage = () => {
                 marginBottom: 2,
                 transition: 'border 0.2s',
               }}
-              onFocus={e => e.target.style.border = '2px solid #ff00cc'}
-              onBlur={e => e.target.style.border = '1.5px solid #ff00cc'}
+              onFocus={e => e.target.style.border = '2px solid #1976d2'}
+              onBlur={e => e.target.style.border = '1.5px solid #1976d2'}
             />
           </div>
           {error && <div style={{ color: '#ff3366', marginBottom: 18, textAlign: 'center', fontWeight: 500 }}>{error}</div>}
@@ -81,7 +81,7 @@ const AdminLoginPage = () => {
             style={{
               width: '100%',
               padding: '14px 0',
-              background: 'linear-gradient(90deg, #ff00cc 60%, #b2008f 100%)',
+              background: 'linear-gradient(90deg, #1976d2 60%, #115293 100%)',
               color: '#fff',
               border: 'none',
               borderRadius: 8,
@@ -93,8 +93,8 @@ const AdminLoginPage = () => {
               marginTop: 10,
               transition: 'background 0.2s',
             }}
-            onMouseOver={e => e.target.style.background = 'linear-gradient(90deg, #b2008f 60%, #ff00cc 100%)'}
-            onMouseOut={e => e.target.style.background = 'linear-gradient(90deg, #ff00cc 60%, #b2008f 100%)'}
+            onMouseOver={e => e.target.style.background = 'linear-gradient(90deg, #115293 60%, #1976d2 100%)'}
+            onMouseOut={e => e.target.style.background = 'linear-gradient(90deg, #1976d2 60%, #115293 100%)'}
           >
             Login
           </button>

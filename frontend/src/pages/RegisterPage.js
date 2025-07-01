@@ -41,7 +41,7 @@ const RegisterPage = () => {
             margin="normal"
             required
             InputLabelProps={{ style: { color: '#fff' } }}
-            InputProps={{ style: { color: '#fff', borderColor: '#ff00cc' } }}
+            InputProps={{ style: { color: '#fff', borderColor: '#1976d2' } }}
           />
           <TextField
             label="E-Mail"
@@ -52,7 +52,7 @@ const RegisterPage = () => {
             margin="normal"
             required
             InputLabelProps={{ style: { color: '#fff' } }}
-            InputProps={{ style: { color: '#fff', borderColor: '#ff00cc' } }}
+            InputProps={{ style: { color: '#fff', borderColor: '#1976d2' } }}
           />
           <TextField
             label="Password"
@@ -63,7 +63,7 @@ const RegisterPage = () => {
             margin="normal"
             required
             InputLabelProps={{ style: { color: '#fff' } }}
-            InputProps={{ style: { color: '#fff', borderColor: '#ff00cc' } }}
+            InputProps={{ style: { color: '#fff', borderColor: '#1976d2' } }}
           />
           <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2, fontWeight: 600, fontSize: 18 }}>
             Register

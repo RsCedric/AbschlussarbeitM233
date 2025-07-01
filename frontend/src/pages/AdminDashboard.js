@@ -60,8 +60,8 @@ const EditModal = ({ open, onClose, reservation, onSave }) => {
           <input name="remark" value={form.remark || ''} onChange={handleChange} style={{ width: '100%', padding: 8, borderRadius: 6, border: '1px solid #ff00cc', background: '#121212', color: '#fff' }} />
         </div>
         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 12 }}>
-          <button type="button" onClick={onClose} style={{ background: '#121212', color: '#ff00cc', border: '1px solid #ff00cc', borderRadius: 6, padding: '8px 16px', cursor: 'pointer' }}>Abbrechen</button>
-          <button type="submit" style={{ background: '#ff00cc', color: '#fff', border: 'none', borderRadius: 6, padding: '8px 16px', cursor: 'pointer' }}>Speichern</button>
+          <button type="button" onClick={onClose} style={{ background: '#121212', color: '#1976d2', border: '1px solid #1976d2', borderRadius: 6, padding: '8px 16px', cursor: 'pointer' }}>Abbrechen</button>
+          <button type="submit" style={{ background: '#1976d2', color: '#fff', border: 'none', borderRadius: 6, padding: '8px 16px', cursor: 'pointer' }}>Speichern</button>
         </div>
       </form>
     </div>
@@ -120,14 +120,14 @@ const AdminDashboard = () => {
   );
 
   return (
-    <div style={{ maxWidth: 1200, margin: '40px auto', padding: 20, background: '#1e1e1e', borderRadius: 16, boxShadow: '0 0 16px #ff00cc33' }}>
-      <h2 style={{ color: '#ff00cc', marginBottom: 24 }}>Admin: Alle Reservationen</h2>
+    <div style={{ maxWidth: 1200, margin: '40px auto', padding: 20, background: '#1e1e1e', borderRadius: 16, boxShadow: '0 0 16px #1976d233' }}>
+      <h2 style={{ color: '#1976d2', marginBottom: 24 }}>Admin: Alle Reservationen</h2>
       <input
         type="text"
         placeholder="Filtern nach Name, Raum, E-Mail, Bemerkung..."
         value={filter}
         onChange={e => setFilter(e.target.value)}
-        style={{ marginBottom: 20, padding: 10, width: 350, borderRadius: 8, border: '1px solid #ff00cc', background: '#121212', color: '#fff' }}
+        style={{ marginBottom: 20, padding: 10, width: 350, borderRadius: 8, border: '1px solid #1976d2', background: '#121212', color: '#fff' }}
       />
       {loading ? (
         <div style={{ color: '#fff', textAlign: 'center', padding: 40 }}>Lade Reservationen...</div>

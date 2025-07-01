@@ -67,12 +67,12 @@ const navBtnStyle = {
   px: 2.5,
   py: 1,
   background: 'none',
-  border: '2px solid #ff00cc',
+  border: '2px solid #1976d2',
   transition: 'background 0.2s, color 0.2s',
   '&:hover': {
-    background: '#ff00cc',
+    background: '#1976d2',
     color: '#fff',
-    borderColor: '#b2008f',
+    borderColor: '#115293',
   },
 };
 

@@ -31,8 +31,8 @@ const LoginPage = () => {
 
   return (
     <div style={{ minHeight: '100vh', background: '#18181b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ background: '#23232a', borderRadius: 14, boxShadow: '0 2px 12px #00000022', padding: 40, width: 370, maxWidth: '90vw', border: '2px solid #ff00cc' }}>
-        <h2 style={{ color: '#ff00cc', textAlign: 'center', marginBottom: 32, letterSpacing: 1, fontWeight: 700 }}>Login</h2>
+      <div style={{ background: '#23232a', borderRadius: 14, boxShadow: '0 2px 12px #00000022', padding: 40, width: 370, maxWidth: '90vw', border: '2px solid #1976d2' }}>
+        <h2 style={{ color: '#1976d2', textAlign: 'center', marginBottom: 32, letterSpacing: 1, fontWeight: 700 }}>Login</h2>
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: 22 }}>
             <label style={{ color: '#fff', fontWeight: 500 }}>Username:</label><br />
@@ -45,7 +45,7 @@ const LoginPage = () => {
                 width: '100%',
                 padding: '12px 14px',
                 borderRadius: 8,
-                border: '2px solid #ff00cc',
+                border: '2px solid #1976d2',
                 background: '#18181b',
                 color: '#fff',
                 fontSize: 16,
@@ -54,8 +54,8 @@ const LoginPage = () => {
                 marginBottom: 2,
                 transition: 'border 0.2s',
               }}
-              onFocus={e => e.target.style.border = '2.5px solid #ff00cc'}
-              onBlur={e => e.target.style.border = '2px solid #ff00cc'}
+              onFocus={e => e.target.style.border = '2.5px solid #1976d2'}
+              onBlur={e => e.target.style.border = '2px solid #1976d2'}
             />
           </div>
           <div style={{ marginBottom: 22 }}>
@@ -69,7 +69,7 @@ const LoginPage = () => {
                 width: '100%',
                 padding: '12px 14px',
                 borderRadius: 8,
-                border: '2px solid #ff00cc',
+                border: '2px solid #1976d2',
                 background: '#18181b',
                 color: '#fff',
                 fontSize: 16,
@@ -78,8 +78,8 @@ const LoginPage = () => {
                 marginBottom: 2,
                 transition: 'border 0.2s',
               }}
-              onFocus={e => e.target.style.border = '2.5px solid #ff00cc'}
-              onBlur={e => e.target.style.border = '2px solid #ff00cc'}
+              onFocus={e => e.target.style.border = '2.5px solid #1976d2'}
+              onBlur={e => e.target.style.border = '2px solid #1976d2'}
             />
           </div>
           {error && <div style={{ color: '#ff3366', marginBottom: 18, textAlign: 'center', fontWeight: 500 }}>{error}</div>}
@@ -88,7 +88,7 @@ const LoginPage = () => {
             style={{
               width: '100%',
               padding: '14px 0',
-              background: '#ff00cc',
+              background: '#1976d2',
               color: '#fff',
               border: 'none',
               borderRadius: 8,
@@ -100,8 +100,8 @@ const LoginPage = () => {
               marginTop: 10,
               transition: 'background 0.2s',
             }}
-            onMouseOver={e => e.target.style.background = '#b2008f'}
-            onMouseOut={e => e.target.style.background = '#ff00cc'}
+            onMouseOver={e => e.target.style.background = '#115293'}
+            onMouseOut={e => e.target.style.background = '#1976d2'}
           >
             Login
           </button>
