@@ -20,7 +20,7 @@ services:
       dockerfile: Dockerfile.backend
     container_name: multiuserapp-backend
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/multiuserapp?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/multiuserapp?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: password
     ports:
@@ -37,7 +37,7 @@ services:
       dockerfile: Dockerfile
     container_name: multiuserapp-frontend
     environment:
-      REACT_APP_API_URL: http://localhost:8080/api
+      REACT_APP_API_URL: http://backend:8080/api
     ports:
       - "3000:3000"
     depends_on:
