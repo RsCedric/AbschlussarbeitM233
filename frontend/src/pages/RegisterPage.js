@@ -31,7 +31,7 @@ const RegisterPage = () => {
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: 'background.default' }}>
       <Paper elevation={6} sx={{ p: 4, minWidth: 320, maxWidth: 400, width: '100%', bgcolor: 'background.paper' }}>
-        <Typography variant="h5" align="center" gutterBottom>Register</Typography>
+        <Typography variant="h5" align="center" gutterBottom sx={{ color: 'primary.main', fontWeight: 700 }}>Register</Typography>
         <form onSubmit={handleSubmit}>
           <TextField
             label="Username"
@@ -40,6 +40,8 @@ const RegisterPage = () => {
             fullWidth
             margin="normal"
             required
+            InputLabelProps={{ style: { color: '#fff' } }}
+            InputProps={{ style: { color: '#fff', borderColor: '#ff00cc' } }}
           />
           <TextField
             label="E-Mail"
@@ -49,6 +51,8 @@ const RegisterPage = () => {
             fullWidth
             margin="normal"
             required
+            InputLabelProps={{ style: { color: '#fff' } }}
+            InputProps={{ style: { color: '#fff', borderColor: '#ff00cc' } }}
           />
           <TextField
             label="Password"
@@ -58,13 +62,15 @@ const RegisterPage = () => {
             fullWidth
             margin="normal"
             required
+            InputLabelProps={{ style: { color: '#fff' } }}
+            InputProps={{ style: { color: '#fff', borderColor: '#ff00cc' } }}
           />
-          <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
+          <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2, fontWeight: 600, fontSize: 18 }}>
             Register
           </Button>
         </form>
         {error && <Typography color="error" align="center" sx={{ mt: 2 }}>{error}</Typography>}
-        {success && <Typography color="success.main" align="center" sx={{ mt: 2 }}>{success}</Typography>}
+        {success && <Typography sx={{ color: 'primary.main', textAlign: 'center', mt: 2 }}>{success}</Typography>}
       </Paper>
     </Box>
   );

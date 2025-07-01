@@ -12,11 +12,11 @@ const HomePage = () => {
       <Box sx={{
         p: 4,
         bgcolor: 'background.paper',
-        borderRadius: 4,
-        boxShadow: '0 0 32px 4px #ff00cc55',
+        borderRadius: 3,
+        boxShadow: '0 2px 12px rgba(0,0,0,0.08)',
         minWidth: 370,
         textAlign: 'center',
-        border: '2px solid',
+        border: '1.5px solid',
         borderColor: 'primary.main',
         position: 'relative',
         overflow: 'hidden',
@@ -27,14 +27,8 @@ const HomePage = () => {
           fontWeight={700}
           sx={{
             color: 'primary.main',
-            textShadow: '0 0 16px #ff00cc, 0 0 32px #ff00cc',
-            letterSpacing: 2,
+            letterSpacing: 1.2,
             mb: 2,
-            animation: 'glow 2s infinite alternate',
-            '@keyframes glow': {
-              from: { textShadow: '0 0 16px #ff00cc, 0 0 32px #ff00cc' },
-              to: { textShadow: '0 0 32px #00fff7, 0 0 64px #00fff7' },
-            },
           }}
         >
           Willkommen{user ? `, ${user.username}` : "!"}
@@ -47,18 +41,9 @@ const HomePage = () => {
             variant="contained"
             size="large"
             sx={{
-              background: 'linear-gradient(90deg, #ff00cc 0%, #00fff7 100%)',
-              color: '#121212',
               fontWeight: 700,
               fontSize: 20,
-              boxShadow: '0 0 16px #00fff7',
-              borderRadius: 3,
-              transition: 'transform 0.2s',
-              '&:hover': {
-                background: 'linear-gradient(90deg, #00fff7 0%, #ff00cc 100%)',
-                transform: 'scale(1.05)',
-                boxShadow: '0 0 32px #ff00cc',
-              },
+              borderRadius: 2,
             }}
             onClick={() => navigate("/reservation")}
           >
@@ -73,13 +58,6 @@ const HomePage = () => {
                 color: 'secondary.main',
                 fontWeight: 600,
                 fontSize: 18,
-                boxShadow: '0 0 8px #00fff7',
-                '&:hover': {
-                  background: 'rgba(0,255,247,0.1)',
-                  borderColor: 'primary.main',
-                  color: 'primary.main',
-                  boxShadow: '0 0 16px #ff00cc',
-                },
               }}
               onClick={() => navigate("/meinebuchungen")}
             >
@@ -94,13 +72,6 @@ const HomePage = () => {
               color: 'primary.main',
               fontWeight: 600,
               fontSize: 18,
-              boxShadow: '0 0 8px #ff00cc',
-              '&:hover': {
-                background: 'rgba(255,0,204,0.08)',
-                borderColor: 'secondary.main',
-                color: 'secondary.main',
-                boxShadow: '0 0 16px #00fff7',
-              },
             }}
             onClick={() => navigate("/rooms")}
           >
@@ -115,11 +86,6 @@ const HomePage = () => {
                 color: 'secondary.main',
                 fontWeight: 600,
                 fontSize: 18,
-                '&:hover': {
-                  background: 'rgba(0,255,247,0.1)',
-                  borderColor: 'primary.main',
-                  color: 'primary.main',
-                },
               }}
               onClick={() => navigate("/login")}
             >
@@ -135,11 +101,6 @@ const HomePage = () => {
                 color: 'primary.main',
                 fontWeight: 600,
                 fontSize: 18,
-                '&:hover': {
-                  background: 'rgba(255,0,204,0.08)',
-                  borderColor: 'secondary.main',
-                  color: 'secondary.main',
-                },
               }}
               onClick={() => navigate("/register")}
             >
@@ -156,7 +117,6 @@ const HomePage = () => {
               textDecoration: 'underline',
               '&:hover': {
                 color: 'primary.main',
-                textShadow: '0 0 8px #ff00cc',
               },
             }}
             onClick={() => navigate("/admin")}
